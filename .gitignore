@@ -1,0 +1,14 @@
+# dataset (download separately, see README)
+data/
+# python
+.venv/
+__pycache__/
+*.pyc
+# outputs
+*.png
+!docs/*.png
+models/
+.DS_Store
+.ipynb_checkpoints/
+CLAUDE.md
+.claude/
