@@ -26,7 +26,7 @@ python scripts/show_samples.py
 ## Status
 
 - [x] Step 1: data loader
-- [ ] Step 2: NumPy MLP + gradient check
+- [x] Step 2: NumPy MLP + gradient check
 - [ ] Step 3: training + curves
 - [ ] Step 4: PyTorch MLP + CNN
 - [ ] Step 5: comparison
