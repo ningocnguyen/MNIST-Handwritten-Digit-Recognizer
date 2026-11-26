@@ -5,42 +5,18 @@
 Needs the trained weights in models/ (see README: python -m mnist.train, etc.).
 """
 
-from pathlib import Path
-
 import gradio as gr
 import numpy as np
-import torch
 
-from mnist.numpy_mlp import NumpyMLP
+from mnist.inference import load_models
 from mnist.preprocess import canvas_to_ink, to_mnist
-from mnist.torch_models import SmallCNN, TorchMLP
 
-ROOT = Path(__file__).resolve().parent
-MODELS_DIR = ROOT / "models"
-
-
-def load_models() -> dict:
-    """name -> function mapping a (N, 784) float32 array to (N, 10) probabilities."""
-    numpy_mlp = NumpyMLP()
-    numpy_mlp.params = dict(np.load(MODELS_DIR / "numpy_mlp.npz"))
-
-    def torch_model(model, weights):
-        model.load_state_dict(torch.load(MODELS_DIR / weights, map_location="cpu"))
-        model.eval()
-
-        @torch.no_grad()
-        def predict(X):
-            return torch.softmax(model(torch.from_numpy(X)), dim=1).numpy()
-        return predict
-
-    return {
-        "PyTorch CNN": torch_model(SmallCNN(), "torch_cnn.pt"),
-        "PyTorch MLP": torch_model(TorchMLP(), "torch_mlp.pt"),
-        "NumPy MLP (from scratch)": lambda X: np.exp(numpy_mlp.forward(X)[0]),
-    }
-
-
-MODELS = load_models()
+_loaded = load_models()
+MODELS = {  # display order: best model first
+    "PyTorch CNN": _loaded["PyTorch CNN"],
+    "PyTorch MLP": _loaded["PyTorch MLP"],
+    "NumPy MLP (from scratch)": _loaded["NumPy MLP"],
+}
 
 
 def classify(canvas):

@@ -1,3 +1,10 @@
+[project]
+name = "mnist-from-scratch"
+version = "1.0.0"
+description = "Handwritten digit recognition: an MLP with hand-written backprop in NumPy, then an MLP and a CNN in PyTorch"
+requires-python = ">=3.10"
+# dependencies are listed in requirements.txt
+
 [tool.pytest.ini_options]
 pythonpath = ["."]
 testpaths = ["tests"]

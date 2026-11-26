@@ -20,7 +20,7 @@ import torch.nn.functional as F
 
 from mnist.data import load_mnist
 from mnist.numpy_mlp import NumpyMLP
-from mnist.train import plot_history
+from mnist.plotting import plot_history
 
 ROOT = Path(__file__).resolve().parent.parent
 
