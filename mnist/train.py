@@ -86,7 +86,7 @@ TRAIN_COLOR, VAL_COLOR = "#257de0", "#f47230"
 TEXT, TEXT_2, GRID = "#191919", "#666666", "#e6e6e6"
 
 
-def plot_history(history: dict, path: Path) -> None:
+def plot_history(history: dict, path: Path, title: str = "NumPy MLP (784-128-10) on MNIST") -> None:
     import matplotlib
 
     matplotlib.use("Agg")
@@ -100,7 +100,7 @@ def plot_history(history: dict, path: Path) -> None:
     ]
 
     fig, axes = plt.subplots(1, 2, figsize=(11, 4))
-    for ax, (title, train_key, val_key, fmt) in zip(axes, panels):
+    for ax, (panel_title, train_key, val_key, fmt) in zip(axes, panels):
         for key, label, color in ((train_key, "train", TRAIN_COLOR), (val_key, "val", VAL_COLOR)):
             values = history[key]
             ax.plot(epochs, values, color=color, linewidth=2, label=label)
@@ -109,7 +109,7 @@ def plot_history(history: dict, path: Path) -> None:
                         xytext=(6, 0), textcoords="offset points", va="center",
                         color=TEXT, fontsize=9)
         ax.axvline(best, color=TEXT_2, linewidth=1, linestyle=":")
-        ax.set_title(title, loc="left", color=TEXT, fontsize=11)
+        ax.set_title(panel_title, loc="left", color=TEXT, fontsize=11)
         ax.set_xlabel("epoch", color=TEXT_2)
         ax.grid(axis="y", color=GRID, linewidth=0.8)
         ax.set_axisbelow(True)
@@ -121,8 +121,8 @@ def plot_history(history: dict, path: Path) -> None:
         ax.set_xlim(0.5, epochs[-1] + max(2, 0.22 * len(epochs)))  # room for end labels
         ax.xaxis.set_major_locator(matplotlib.ticker.MaxNLocator(integer=True))
 
-    axes[1].yaxis.set_major_formatter(matplotlib.ticker.PercentFormatter(1.0, decimals=1))
-    fig.suptitle("NumPy MLP (784-128-10) on MNIST", x=0.01, ha="left", color=TEXT, fontsize=13)
+    axes[1].yaxis.set_major_formatter(matplotlib.ticker.PercentFormatter(1.0, decimals=None))
+    fig.suptitle(title, x=0.01, ha="left", color=TEXT, fontsize=13)
     fig.text(0.01, 0.905, f"Dotted line: best validation epoch ({best}); final weights are "
              "restored from there.", ha="left", color=TEXT_2, fontsize=9)
     handles, labels = axes[0].get_legend_handles_labels()
