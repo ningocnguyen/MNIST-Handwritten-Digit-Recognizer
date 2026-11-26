@@ -29,5 +29,5 @@ python scripts/show_samples.py
 - [x] Step 2: NumPy MLP + gradient check
 - [x] Step 3: training + curves
 - [x] Step 4: PyTorch MLP + CNN
-- [ ] Step 5: comparison
+- [x] Step 5: comparison
 - [ ] Step 6: draw-a-digit demo
